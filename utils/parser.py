@@ -14,6 +14,10 @@ def extract_text(uploaded_file) -> str:
         return ""
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 def _extract_pdf(uploaded_file) -> str:
     try:
         import fitz  # PyMuPDF
@@ -22,7 +26,8 @@ def _extract_pdf(uploaded_file) -> str:
         text = "\n".join(page.get_text() for page in doc)
         return _clean(text)
     except Exception as e:
-        return f"[PDF extraction error: {e}]"
+        logger.warning("PDF extraction failed", exc_info=e)
+        return ""
 
 
 def _extract_docx(uploaded_file) -> str:
@@ -32,7 +37,8 @@ def _extract_docx(uploaded_file) -> str:
         text = "\n".join(p.text for p in doc.paragraphs)
         return _clean(text)
     except Exception as e:
-        return f"[DOCX extraction error: {e}]"
+        logger.warning("DOCX extraction failed", exc_info=e)
+        return ""
 
 
 def _clean(text: str) -> str:
