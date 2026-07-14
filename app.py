@@ -117,7 +117,8 @@ if uploaded_file:
         resume_text = extract_text(uploaded_file)
 
         if not resume_text.strip():
-            st.error("❌ Could not extract text from the file. Try a text-based PDF or DOCX.")
+            st.error("❌ Could not extract text from the file. This may be a scanned or corrupted PDF/DOCX.")
+            st.info("Try uploading a text-based PDF or a DOCX resume.")
             st.stop()
 
         # Analyze
