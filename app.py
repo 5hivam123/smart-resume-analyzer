@@ -29,6 +29,12 @@ st.markdown("""
         padding: 24px;
         text-align: center;
         margin-bottom: 20px;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .score-card:hover {
+        transform: translateY(-4px);
+        border-color: #7c3aedff;
+        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.2);
     }
     .score-number {
         font-size: 64px;
@@ -46,6 +52,12 @@ st.markdown("""
         font-size: 13px;
         margin: 4px;
         font-weight: 500;
+        transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .keyword-chip:hover {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+        cursor: default;
     }
     .chip-found  { background: #064e3b; color: #6ee7b7; border: 1px solid #065f46; }
     .chip-missing{ background: #450a0a; color: #fca5a5; border: 1px solid #7f1d1d; }
@@ -56,6 +68,12 @@ st.markdown("""
         border-radius: 12px;
         padding: 20px;
         margin-bottom: 16px;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .section-card:hover {
+        transform: translateY(-2px);
+        border-color: #4c1d95;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     }
     .section-title {
         font-size: 16px;
@@ -72,6 +90,12 @@ st.markdown("""
         margin-bottom: 8px;
         font-size: 14px;
         color: #cbd5e1;
+        transition: border-left-width 0.2s ease, padding-left 0.2s ease, background-color 0.2s ease;
+    }
+    .tip-item:hover {
+        border-left-width: 6px;
+        padding-left: 11px;
+        background-color: #24354a;
     }
     .stProgress > div > div > div { background: linear-gradient(90deg, #7c3aed, #06b6d4); }
 
@@ -79,6 +103,11 @@ st.markdown("""
         background: #1a1a2e !important;
         border: 2px dashed #7c3aed88 !important;
         border-radius: 12px !important;
+        transition: border-color 0.3s ease, background-color 0.3s ease !important;
+    }
+    div[data-testid="stFileUploadDropzone"]:hover {
+        border-color: #06b6d4 !important;
+        background-color: #1f1f38 !important;
     }
 </style>
 """, unsafe_allow_html=True)
