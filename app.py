@@ -140,9 +140,21 @@ st.markdown("---")
 
 # ── Upload ────────────────────────────────────────────────────────────────────
 uploaded_file = st.file_uploader(
-    "Upload your Resume",
+    "📄 Upload your Resume",
     type=["pdf", "docx"],
-    help="Supports PDF and DOCX formats",
+    help="""
+📋 Upload Requirements
+
+• Supported formats: PDF (.pdf) and DOCX (.docx)
+• Maximum file size: 200 MB
+• Use a text-based resume for accurate analysis.
+• Scanned or password-protected files may not be processed correctly.
+• Uploaded resumes are used only for analysis during the current session and are not permanently stored.
+""",
+)
+
+st.caption(
+    "📄 Supported: PDF, DOCX | 📦 Max Size: 200 MB | 🔒 Files are processed only during the current session."
 )
 
 if uploaded_file:
