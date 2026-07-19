@@ -136,6 +136,21 @@ with st.sidebar:
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown("# 📄 Smart Resume Analyzer")
 st.markdown("*Get ATS score, keyword gaps & actionable improvements for your resume*")
+
+with st.expander("ℹ️ What is an ATS Score?"):
+    st.markdown("""
+An **Applicant Tracking System (ATS)** is software used by recruiters to automatically scan and rank resumes.
+
+This tool estimates your ATS compatibility by analyzing:
+
+- ✅ Resume keywords
+- ✅ Resume sections
+- ✅ Skills relevant to your selected job role
+- ✅ Overall resume quality
+
+A higher ATS score generally means your resume is better optimized for recruiter screening systems.
+""")
+
 st.markdown("---")
 
 # ── Upload ────────────────────────────────────────────────────────────────────
