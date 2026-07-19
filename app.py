@@ -209,7 +209,41 @@ st.markdown("""
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
-    job_role = st.selectbox("🎯 Target Job Role", list(JOB_ROLES.keys()))
+
+    # Popular roles shown first
+    popular_roles = [
+        "Software Developer (SDE)",
+        "Frontend Developer",
+        "Backend Developer",
+        "Data Scientist",
+        "Machine Learning Engineer"
+    ]
+
+    # Get all roles from JOB_ROLES
+    all_roles = sorted(JOB_ROLES.keys())
+
+    # Create final list: Popular roles first, then remaining roles alphabetically
+    remaining_roles = [r for r in all_roles if r not in popular_roles]
+    role_options = popular_roles + remaining_roles
+
+    # Remember last selected role
+    if "selected_role" not in st.session_state:
+        st.session_state.selected_role = role_options[0]
+
+    # Ensure saved role exists
+    if st.session_state.selected_role not in role_options:
+        st.session_state.selected_role = role_options[0]
+
+    job_role = st.selectbox(
+        "🎯 Target Job Role",
+        role_options,
+        index=role_options.index(st.session_state.selected_role),
+        placeholder="Search or select a job role..."
+    )
+
+    # Save current selection
+    st.session_state.selected_role = job_role
+
     st.markdown("---")
     st.markdown("### 📋 How It Works")
     st.markdown("""
@@ -225,13 +259,40 @@ with st.sidebar:
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown("# 📄 Smart Resume Analyzer")
 st.markdown("*Get ATS score, keyword gaps & actionable improvements for your resume*")
+
+with st.expander("ℹ️ What is an ATS Score?"):
+    st.markdown("""
+An **Applicant Tracking System (ATS)** is software used by recruiters to automatically scan and rank resumes.
+
+This tool estimates your ATS compatibility by analyzing:
+
+- ✅ Resume keywords
+- ✅ Resume sections
+- ✅ Skills relevant to your selected job role
+- ✅ Overall resume quality
+
+A higher ATS score generally means your resume is better optimized for recruiter screening systems.
+""")
+
 st.markdown("---")
 
 # ── Upload ────────────────────────────────────────────────────────────────────
 uploaded_file = st.file_uploader(
-    "Upload your Resume",
+    "📄 Upload your Resume",
     type=["pdf", "docx"],
-    help="Supports PDF and DOCX formats",
+    help="""
+📋 Upload Requirements
+
+• Supported formats: PDF (.pdf) and DOCX (.docx)
+• Maximum file size: 200 MB
+• Use a text-based resume for accurate analysis.
+• Scanned or password-protected files may not be processed correctly.
+• Uploaded resumes are used only for analysis during the current session and are not permanently stored.
+""",
+)
+
+st.caption(
+    "📄 Supported: PDF, DOCX | 📦 Max Size: 200 MB | 🔒 Files are processed only during the current session."
 )
 
 if uploaded_file:
