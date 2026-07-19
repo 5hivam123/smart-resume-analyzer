@@ -321,7 +321,7 @@ if uploaded_file:
         )
         st.markdown(f"""
         <div class="score-card">
-            <div class="score-number">{score_data['total']}</div>
+            <div class="score-number" style="background: none; -webkit-text-fill-color: {grade_color}; color: {grade_color};">{score_data['total']}</div>
             <div class="score-label">ATS COMPATIBILITY SCORE / 100</div>
         </div>
         """, unsafe_allow_html=True)
