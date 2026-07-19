@@ -201,3 +201,63 @@ else:
         <p>Supports PDF and DOCX · Instant ATS score · Keyword gap analysis</p>
     </div>
     """, unsafe_allow_html=True)
+
+# ==============================================================================
+# SCROLL-TO-TOP BUTTON (ECSoC26 Feature)
+# ==============================================================================
+import streamlit as st
+
+scroll_to_top_html = """
+<button id="scrollToTopBtn" title="Go to top">▲</button>
+
+<style>
+#scrollToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/floating position */
+    bottom: 30px; /* Safe distance from the bottom */
+    right: 30px; /* Safe distance from the right */
+    z-index: 9999; /* Make sure it stays on top of other elements */
+    border: none;
+    outline: none;
+    background-color: #FF4B4B; /* Matches Streamlit's default red accent color */
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%; /* Makes the button perfectly circular */
+    font-size: 18px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adds a modern drop shadow */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#scrollToTopBtn:hover {
+    background-color: #333333; /* Turns dark grey on hover */
+    transform: scale(1.1); /* Gently enlarges on hover */
+}
+</style>
+
+<script>
+// Target the main scrollable container inside a Streamlit application
+const mainContainer = window.parent.document.querySelector('.main') || window.parent;
+
+// Show the button when the user scrolls down 300px from the top
+mainContainer.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollToTopBtn');
+    if (mainContainer.scrollTop > 300 || window.parent.scrollY > 300) {
+        btn.style.display = "block";
+    } else {
+        btn.style.display = "none";
+    }
+});
+
+// Smoothly scroll back to the top when clicked
+document.getElementById('scrollToTopBtn').addEventListener('click', () => {
+    mainContainer.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+</script>
+"""
+
+# Render the button inside the application cleanly
+st.markdown(scroll_to_top_html, unsafe_allow_html=True)
