@@ -80,9 +80,103 @@ st.markdown("""
         border: 2px dashed #7c3aed88 !important;
         border-radius: 12px !important;
     }
-</style>
-""", unsafe_allow_html=True)
 
+    /* --- Interactive Cursor Styles --- */
+    /* Hide the default browser mouse pointer */
+    body, button, a, input, select, textarea, .stButton>button, div[data-testid="stFileUploadDropzone"] {
+        cursor: none !important;
+    }
+
+    /* The tiny center dot */
+    .custom-cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #7c3aed; /* Theme matching purple */
+        position: fixed;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 999999;
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+
+    /* The outer floating tracking circle */
+    .custom-cursor-ring {
+        width: 32px;
+        height: 32px;
+        border: 2px solid #a78bfa;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 999998;
+        transition: transform 0.08s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+    }
+
+    /* Visual effect when hovering over interactive elements */
+    .custom-cursor-hover .custom-cursor-dot {
+        width: 4px;
+        height: 4px;
+        background-color: #06b6d4; /* Glow cyan */
+    }
+    .custom-cursor-hover .custom-cursor-ring {
+        width: 48px;
+        height: 48px;
+        border-color: #06b6d4;
+        background-color: rgba(6, 182, 212, 0.15);
+    }
+
+    /* Safety fallback: Hide the custom cursor layout completely on mobile touch devices */
+    @media (hover: none) and (pointer: coarse) {
+        .custom-cursor-dot, .custom-cursor-ring {
+            display: none !important;
+        }
+        body, button, a, input, select, textarea, .stButton>button, div[data-testid="stFileUploadDropzone"] {
+            cursor: auto !important;
+        }
+    }
+</style>
+<!-- Interactive Cursor Elements -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="custom-cursor-ring" id="cursor-ring"></div>
+
+    <script>
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        const body = document.body;
+
+        // Make the rings follow the screen coordinates of the mouse pointer
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            
+            ring.style.left = e.clientX + 'px';
+            ring.style.top = e.clientY + 'px';
+        });
+
+        // Scan the document structure for interactive components
+        const updateInteractiveHoverStates = () => {
+            const elementsToTrack = document.querySelectorAll('a, button, input[type="file"], select, [role="button"], div[data-testid="stFileUploadDropzone"]');
+            
+            elementsToTrack.forEach(element => {
+                if (!element.dataset.hasCursorListener) {
+                    element.addEventListener('mouseenter', () => body.classList.add('custom-cursor-hover'));
+                    element.addEventListener('mouseleave', () => body.classList.remove('custom-cursor-hover'));
+                    element.dataset.hasCursorListener = "true";
+                }
+            });
+        };
+
+        // Run checking immediately
+        updateInteractiveHoverStates();
+
+        // Streamlit redraws sections dynamically. This keeps tracking new buttons when they appear.
+        const observerInstance = new MutationObserver(() => {
+            updateInteractiveHoverStates();
+        });
+        observerInstance.observe(document.body, { childList: true, subtree: true });
+    </script>
+""", unsafe_allow_html=True)
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
