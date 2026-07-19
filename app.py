@@ -86,7 +86,41 @@ st.markdown("""
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
-    job_role = st.selectbox("🎯 Target Job Role", list(JOB_ROLES.keys()))
+
+    # Popular roles shown first
+    popular_roles = [
+        "Software Developer (SDE)",
+        "Frontend Developer",
+        "Backend Developer",
+        "Data Scientist",
+        "Machine Learning Engineer"
+    ]
+
+    # Get all roles from JOB_ROLES
+    all_roles = sorted(JOB_ROLES.keys())
+
+    # Create final list: Popular roles first, then remaining roles alphabetically
+    remaining_roles = [r for r in all_roles if r not in popular_roles]
+    role_options = popular_roles + remaining_roles
+
+    # Remember last selected role
+    if "selected_role" not in st.session_state:
+        st.session_state.selected_role = role_options[0]
+
+    # Ensure saved role exists
+    if st.session_state.selected_role not in role_options:
+        st.session_state.selected_role = role_options[0]
+
+    job_role = st.selectbox(
+        "🎯 Target Job Role",
+        role_options,
+        index=role_options.index(st.session_state.selected_role),
+        placeholder="Search or select a job role..."
+    )
+
+    # Save current selection
+    st.session_state.selected_role = job_role
+
     st.markdown("---")
     st.markdown("### 📋 How It Works")
     st.markdown("""
