@@ -163,15 +163,21 @@ uploaded_file = st.file_uploader(
 • Supported formats: PDF (.pdf) and DOCX (.docx)
 • Maximum file size: 200 MB
 • Use a text-based resume for accurate analysis.
-• Scanned or password-protected files may not be processed correctly.
+• Scanned, password-protected, or corrupted files may not be processed correctly.
 • Uploaded resumes are used only for analysis during the current session and are not permanently stored.
 """,
 )
 
-st.caption(
-    "📄 Supported: PDF, DOCX | 📦 Max Size: 200 MB | 🔒 Files are processed only during the current session."
-)
+# Display upload guidance below the uploader
+st.info("""
+### 📋 Upload Guidelines
 
+- 📄 **Supported Formats:** PDF (.pdf), DOCX (.docx)
+- 📦 **Maximum File Size:** 200 MB
+- 📝 **Recommended:** Upload a text-based resume for the best analysis results.
+- ⚠️ **Note:** Scanned, password-protected, or corrupted files may not be processed correctly.
+- 🔒 **Privacy:** Your uploaded resume is processed only during the current session and is **not permanently stored**.
+""")
 if uploaded_file:
     with st.spinner("🔍 Analyzing your resume..."):
         # Extract text
