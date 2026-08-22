@@ -110,11 +110,6 @@ st.markdown("""
         background-color: #1f1f38 !important;
     }
 
-    /* --- Interactive Cursor Styles --- */
-    /* Hide the default browser mouse pointer */
-    body, button, a, input, select, textarea, .stButton>button, div[data-testid="stFileUploadDropzone"] {
-        cursor: none !important;
-    }
 
     /* The tiny center dot */
     .custom-cursor-dot {
@@ -165,6 +160,7 @@ st.markdown("""
         }
     }
 </style>
+
 <!-- Interactive Cursor Elements -->
     <div class="custom-cursor-dot" id="cursor-dot"></div>
     <div class="custom-cursor-ring" id="cursor-ring"></div>
@@ -194,18 +190,7 @@ st.markdown("""
                     element.dataset.hasCursorListener = "true";
                 }
             });
-        };
-
-        // Run checking immediately
-        updateInteractiveHoverStates();
-
-        // Streamlit redraws sections dynamically. This keeps tracking new buttons when they appear.
-        const observerInstance = new MutationObserver(() => {
-            updateInteractiveHoverStates();
-        });
-        observerInstance.observe(document.body, { childList: true, subtree: true });
-    </script>
-""", unsafe_allow_html=True)
+  
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
@@ -246,13 +231,13 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("### 📋 How It Works")
-    st.markdown("""
-    1. Upload your resume (PDF/DOCX)  
-    2. Select a job role  
-    3. Get instant ATS score  
-    4. See missing keywords  
-    5. Follow improvement tips  
-    """)
+    st.markdown(
+    """1. Upload your resume (PDF/DOCX) """
+    """2. Select a job role"""
+    """3. Get instant ATS score  """
+    """4. See missing keywords  """
+    """5. Follow improvement tips  """
+    )
     st.markdown("---")
     st.caption("Built with Python · NLP · Streamlit")
 
@@ -265,11 +250,10 @@ with st.expander("ℹ️ What is an ATS Score?"):
 An **Applicant Tracking System (ATS)** is software used by recruiters to automatically scan and rank resumes.
 
 This tool estimates your ATS compatibility by analyzing:
-
-- ✅ Resume keywords
-- ✅ Resume sections
-- ✅ Skills relevant to your selected job role
-- ✅ Overall resume quality
+"""- ✅ Resume keywords"""
+"""- ✅ Resume sections"""
+"""- ✅ Skills relevant to your selected job role"""
+"""- ✅ Overall resume quality"""
 
 A higher ATS score generally means your resume is better optimized for recruiter screening systems.
 """)
@@ -281,13 +265,14 @@ uploaded_file = st.file_uploader(
     "📄 Upload your Resume",
     type=["pdf", "docx"],
     help="""
-📋 Upload Requirements
+"""📋 Upload Requirements"""
 
+"""
 • Supported formats: PDF (.pdf) and DOCX (.docx)
 • Maximum file size: 200 MB
 • Use a text-based resume for accurate analysis.
 • Scanned or password-protected files may not be processed correctly.
-• Uploaded resumes are used only for analysis during the current session and are not permanently stored.
+• Uploaded resumes are used only for analysis during the current session and are not permanently stored."""
 """,
 )
 
@@ -380,9 +365,9 @@ else:
     # Empty state
     st.markdown("""
     <div style="text-align:center; padding: 60px 20px; color: #555580;">
-        <div style="font-size: 64px;">📄</div>
+        <div style="font-size: 64px;">"""📄"""</div>
         <h3 style="color: #7c7caa;">Upload your resume to get started</h3>
-        <p>Supports PDF and DOCX · Instant ATS score · Keyword gap analysis</p>
+        <p>"""Supports PDF and DOCX · Instant ATS score · Keyword gap analysis"""</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -392,28 +377,29 @@ else:
 import streamlit as st
 
 scroll_to_top_html = """
-<button id="scrollToTopBtn" title="Go to top">▲</button>
+<button id="scrollToTopBtn" title="Go to top">"""▲"""</button>
 
 <style>
 #scrollToTopBtn {
     display: none; /* Hidden by default */
     position: fixed; /* Fixed/floating position */
-    bottom: 30px; /* Safe distance from the bottom */
-    right: 30px; /* Safe distance from the right */
+    bottom: """30px"""; /* Safe distance from the bottom */
+    right: """30px"""; /* Safe distance from the right */
     z-index: 9999; /* Make sure it stays on top of other elements */
     border: none;
     outline: none;
     background-color: #FF4B4B; /* Matches Streamlit's default red accent color */
     color: white;
     cursor: pointer;
-    padding: 15px;
+    padding: """15px""";
     border-radius: 50%; /* Makes the button perfectly circular */
-    font-size: 18px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adds a modern drop shadow */
-    transition: background-color 0.3s, transform 0.2s;
-}
+    font-size: """18px""";
+    box-shadow: """0px 4px 10px rgba(0, 0, 0, 0.3)"""; /* Adds a modern drop shadow */
+    transition: """background-color 0.3s, transform 0.2s""";
+)
 
 #scrollToTopBtn:hover {
+'''
     background-color: #333333; /* Turns dark grey on hover */
     transform: scale(1.1); /* Gently enlarges on hover */
 }
@@ -442,6 +428,7 @@ document.getElementById('scrollToTopBtn').addEventListener('click', () => {
 });
 </script>
 """
+'''
 
 # Render the button inside the application cleanly
 st.markdown(scroll_to_top_html, unsafe_allow_html=True)
